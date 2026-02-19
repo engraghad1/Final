@@ -1,41 +1,37 @@
- // Cart array and total price
 let cart = [];
 let total = 0;
 
 // Get all order buttons
 const orderButtons = document.querySelectorAll('.order-button');
 
-// Add click event to each button
+// Add click event for each button
 orderButtons.forEach(button => {
     button.addEventListener('click', () => {
-        // Get the parent li element
-        const liElement = button.parentElement;
-        
-        // Get the item details span
-        const itemDetails = liElement.querySelector('.item-details').textContent;
-        
-        // Extract price using regex
-        const priceMatch = itemDetails.match(/(\d+)\s*شيكل/);
-        const itemPrice = parseInt(priceMatch[1]);
-        
-        // Extract item name (remove price)
-        let itemName = itemDetails.replace(/\d+\s*شيكل/, '').trim();
-        
-        // Add item to cart
-        cart.push({ name: itemName, price: itemPrice });
-        
-        // Update total
-        total += itemPrice;
-        
-        // Update cart display
-        updateCart();
+        // Get the text of the dish and its price
+        const itemText = button.parentElement.querySelector('.item-details').textContent.trim();
+        const priceMatch = itemText.match(/- (\d+) شيكل/);
+
+        if (priceMatch) {
+            const itemPrice = parseInt(priceMatch[1], 10);
+            
+            // Add the item to the cart
+            cart.push({ name: itemText, price: itemPrice });
+            
+            // Update the total amount
+            total += itemPrice;
+            
+            // Update the shopping cart display on the page
+            updateCart();
+        } else {
+            console.error('Valid price not found');
+        }
     });
 });
 
-// Update cart display function
+// Function to update the shopping cart display on the page
 function updateCart() {
     const cartItemsList = document.getElementById('cartItems');
-    cartItemsList.innerHTML = ''; // Clear cart list
+    cartItemsList.innerHTML = ''; // Reset the cart item list
     
     cart.forEach(item => {
         const listItem = document.createElement('li');
@@ -43,6 +39,6 @@ function updateCart() {
         cartItemsList.appendChild(listItem);
     });
     
-    // Update total amount
-    document.getElementById('totalAmount').textContent = `المجموع: ${total} شيكل - Total: ${total} ILS`;
+    // Update the total amount
+    document.getElementById('totalAmount').textContent = `Total: ${total} شيكل`;
 }
