@@ -29,7 +29,7 @@ main {
 
 /* ===== Menu Sections Styles ===== */
 .menu-section {
-    background: #FFFAA0;
+    background:  rgb(245, 229, 185);
     border-radius: 8px;
     padding: 15px;
     margin: 10px 0;
@@ -111,6 +111,7 @@ main {
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #f7a761;
+
     margin-top: 20px;
 }
 
